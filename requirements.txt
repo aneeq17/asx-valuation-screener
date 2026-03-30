@@ -1,6 +1,7 @@
-streamlit==1.41.0
-yfinance==1.2.0
-pandas==2.2.0
-numpy==1.26.4
-openpyxl==3.1.5
-curl_cffi==0.13.0
+yfinance
+pandas
+numpy
+streamlit
+openpyxl
+curl_cffi
+websockets
