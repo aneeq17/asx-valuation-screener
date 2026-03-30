@@ -601,8 +601,8 @@ if mode == "Single Stock":
             except:
                 return ""
 
-        styled = df_sens.style.applymap(colour_cell)
-        st.dataframe(styled, use_container_width=True)
+        styled = df_sens.style.map(colour_cell)
+        st.dataframe(styled, width='stretch')
 
     # ── Price chart ───────────────────────────────────────────────────────────
     st.markdown("<p class='section-header'>12-Month Price History</p>",
@@ -612,7 +612,7 @@ if mode == "Single Stock":
         if not hist.empty:
             chart_df = hist[["Close"]].copy()
             chart_df.columns = ["Price ($)"]
-            st.line_chart(chart_df, use_container_width=True)
+            st.line_chart(chart_df, width='stretch')
     except:
         st.info("Price history unavailable")
 
@@ -688,7 +688,7 @@ else:
                          .applymap(colour_signal,  subset=["Signal"])
                          .applymap(colour_upside,  subset=["Upside (%)"]))
 
-            st.dataframe(styled_df, use_container_width=True, height=600)
+            st.dataframe(styled_df, width='stretch', height=600)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # DISCLAIMER
