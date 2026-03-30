@@ -1,7 +1,8 @@
+streamlit==1.45.0
 yfinance
 pandas
 numpy
-streamlit
 openpyxl
 curl_cffi
 websockets
+altair>=5.0.0
