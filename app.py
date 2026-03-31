@@ -661,13 +661,15 @@ if mode == "Single Stock":
     st.markdown("<p class='section-header'>12-Month Price History</p>",
                 unsafe_allow_html=True)
     try:
-        hist = yf.Ticker(ticker_input).history(period="1y")
+        hist = yf.Ticker(r["ticker"]).history(period="1y")
         if not hist.empty:
             chart_df = hist[["Close"]].copy()
             chart_df.columns = ["Price ($)"]
-            st.line_chart(chart_df, use_container_width=True)
-    except:
-        st.info("Price history unavailable")
+            st.line_chart(chart_df)
+        else:
+            st.info("Price history unavailable")
+    except Exception as e:
+        st.info(f"Price history unavailable: {str(e)}")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # FULL SCREENER MODE
