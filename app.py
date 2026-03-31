@@ -661,7 +661,15 @@ if mode == "Single Stock":
     st.markdown("<p class='section-header'>12-Month Price History</p>",
                 unsafe_allow_html=True)
     try:
-        hist = yf.Ticker(r["ticker"]).history(period="1y")
+        import datetime
+        end = datetime.datetime.today()
+        start = end - datetime.timedelta(days=365)
+        hist = yf.download(
+            r["ticker"],
+            start=start.strftime("%Y-%m-%d"),
+            end=end.strftime("%Y-%m-%d"),
+            progress=False
+        )
         if not hist.empty:
             chart_df = hist[["Close"]].copy()
             chart_df.columns = ["Price ($)"]
@@ -669,7 +677,7 @@ if mode == "Single Stock":
         else:
             st.info("Price history unavailable")
     except Exception as e:
-        st.info(f"Price history unavailable: {str(e)}")
+        st.info("Price history unavailable")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # FULL SCREENER MODE
