@@ -394,15 +394,68 @@ with st.sidebar:
     )
 
     if mode == "Single Stock":
-        ticker_input = st.text_input(
-            "Enter ASX Ticker",
-            value="CSL.AX",
-            placeholder="e.g. BHP.AX",
-            help="Add .AX suffix for ASX stocks"
-        ).upper().strip()
 
-        if not ticker_input.endswith(".AX"):
-            ticker_input += ".AX"
+        STOCK_OPTIONS = {
+            "CBA.AX": "CBA.AX — Commonwealth Bank",
+            "NAB.AX": "NAB.AX — National Australia Bank",
+            "WBC.AX": "WBC.AX — Westpac Banking",
+            "ANZ.AX": "ANZ.AX — ANZ Group",
+            "MQG.AX": "MQG.AX — Macquarie Group",
+            "SUN.AX": "SUN.AX — Suncorp Group",
+            "QBE.AX": "QBE.AX — QBE Insurance",
+            "IAG.AX": "IAG.AX — Insurance Australia Group",
+            "BHP.AX": "BHP.AX — BHP Group",
+            "RIO.AX": "RIO.AX — Rio Tinto",
+            "FMG.AX": "FMG.AX — Fortescue Metals",
+            "S32.AX": "S32.AX — South32",
+            "NST.AX": "NST.AX — Northern Star Resources",
+            "EVN.AX": "EVN.AX — Evolution Mining",
+            "WES.AX": "WES.AX — Wesfarmers",
+            "WOW.AX": "WOW.AX — Woolworths Group",
+            "COL.AX": "COL.AX — Coles Group",
+            "JBH.AX": "JBH.AX — JB Hi-Fi",
+            "CSL.AX": "CSL.AX — CSL Limited",
+            "COH.AX": "COH.AX — Cochlear",
+            "RMD.AX": "RMD.AX — ResMed",
+            "REA.AX": "REA.AX — REA Group",
+            "SEK.AX": "SEK.AX — Seek Limited",
+            "TLS.AX": "TLS.AX — Telstra",
+            "QAN.AX": "QAN.AX — Qantas Airways",
+            "AMC.AX": "AMC.AX — Amcor",
+            "ALL.AX": "ALL.AX — Aristocrat Leisure",
+            "ORG.AX": "ORG.AX — Origin Energy",
+            "AGL.AX": "AGL.AX — AGL Energy",
+            "WDS.AX": "WDS.AX — Woodside Energy",
+        }
+
+        search_query = st.text_input(
+            "Search by name or ticker",
+            placeholder="e.g. BHP, Telstra, CSL",
+        ).strip()
+
+        if search_query:
+            q = search_query.upper()
+            filtered = {k: v for k, v in STOCK_OPTIONS.items()
+                       if q in k or q in v.upper()}
+        else:
+            filtered = STOCK_OPTIONS
+
+        if filtered:
+            ticker_input = st.selectbox(
+                "Select Stock",
+                options=list(filtered.keys()),
+                format_func=lambda x: STOCK_OPTIONS.get(x, x),
+            )
+        else:
+            st.caption("No match — enter ticker manually")
+            ticker_input = st.text_input(
+                "Manual ticker", placeholder="e.g. XYZ.AX"
+            ).upper().strip()
+            if ticker_input and not ticker_input.endswith(".AX"):
+                ticker_input += ".AX"
+
+        if not ticker_input:
+            ticker_input = "CSL.AX"
 
     st.markdown("---")
     st.markdown("### ⚙️ Model Assumptions")
