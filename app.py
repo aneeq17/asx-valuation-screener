@@ -688,7 +688,7 @@ else:
                          .applymap(colour_signal,  subset=["Signal"])
                          .applymap(colour_upside,  subset=["Upside (%)"]))
 
-            st.dataframe(styled_df, use_container_width=True, height=600)
+            st.dataframe(styled_df, height=600)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # DISCLAIMER
